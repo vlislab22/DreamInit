@@ -1,0 +1,367 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>DreamInit</title>
+    <meta name="author" content="Lutao Jiang and Addison Lin Wang">
+    <meta name="description" content="Project page of UniBind">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="eccv_logo.png">
+    <!-- Format -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="../format/app.css">
+    <link rel="stylesheet" href="../format/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script src="../format/app.js"></script>
+
+  </head>
+
+  <body style=“text-align: center;”>
+    <div class="container" id="main">
+        <div class="row">
+            <h1 class="col-md-12 text-center">
+                A General Framework to Boost 3D GS Initialization for Text-to-3D Generation by Lexical Richness<br /> 
+                <small>
+                    ACM MM 2024
+                </small>
+            </h1>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline" style="display: flex; justify-content: center; list-style-type: none; padding: 0; margin: 0 auto; max-width: 600px;">
+                    <li style="flex: 1; text-align: center; padding: 10px; box-sizing: border-box;">
+                        <img src="./images/lutao.png" height="100px"><br>
+                        <a href="https://github.com/lutao2021">
+                           Lutao Jiang
+                        </a>
+                        <br /> AI Thrust, HKUST(GZ)
+                    </li>
+                    <li style="flex: 1; text-align: center; padding: 10px; box-sizing: border-box;">
+                        <img src="./images/hangyu.png" height="100px"><br>
+                        <a>
+                           Hangyu Li
+                        </a>
+                        <br /> AI Thrust, HKUST(GZ)
+                    </li>
+                    <li style="flex: 1; text-align: center; padding: 10px; box-sizing: border-box;">
+                        <img src="./images/Addision.png" height="100px"><br>
+                        <a href="https://vlislab22.github.io/vlislab/linwang.html">
+                           Addison Lin Wang
+                        </a>
+                        <br /> AI & CMA Thrust, HKUST(GZ) 
+                        <br/> Dept. of CSE, HKUST 
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <!-- ##### Elements #####-->
+        <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <ul class="nav nav-pills nav-justified">
+                        <li>
+			                <a href="https://arxiv.org/">
+                            <img src="./images/arxiv.png" height="100px"><br>
+                                <h4><strong>Paper</strong></h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/lutao2021">
+                            <img src="./images/github_icon.jpg" height="100px"><br>
+                                <h4><strong>Code</strong></h4>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://vlislab22.github.io/vlislab/">
+                            <img src="./images/lab_logo.png" height="100px"><br>
+                                <h4><strong>Vlislab</strong></h4>
+                            </a>
+                        </li>                       
+                      
+                    </ul>
+                </div>
+        </div>
+
+        <!-- ##### Presentation #####-->
+        <style>
+            .container_presentation {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: left;
+                width: 100%;
+            }
+        </style>
+
+        <br><br><br><br><br>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="container_presentation">
+                    <video controls style="object-fit: fill; width: 100%">
+                        <source src="./videos/video presentaion MM.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br>
+
+        <!-- ##### Abstract #####-->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2 align="center">
+                    <strong>Abstract</strong>
+                </h2>
+                <p class="text-justify">
+                    Text-to-3D content creation has recently received much attention, especially with the prevalence of 3D Gaussians Splatting (3D GS).
+                    In general, GS-based methods comprise two key stages: initialization and rendering optimization. 
+                    To achieve initialization, existing works directly apply random sphere initialization or 3D diffusion models, e.g., Point-E, 
+                    to derive the initial shapes. However, such strategies suffer from two critical yet challenging problems: 
+                    1) the final shapes are still similar to the initial ones even after training; 
+                    2) shapes can be produced only from simple texts, e.g., "a dog", not for lexically richer (or harder) texts, e.g., 
+                    "a dog is sitting on the top of the airplane". 
+                    To address these problems, this paper proposes a novel general framework to boost the 3D GS Initialization for text-to-3D generation 
+                    upon the lexical richness. 
+                    Our key idea is to aggregate 3D Gaussians into spatially uniform voxels to represent complex shapes while enabling the spatial interaction 
+                    among the 3D Gaussians and semantic interaction between Gaussians and texts.
+                    Specifically, we first construct a voxelized representation, where each voxel holds a 3D Gaussian with its position, scale, 
+                    and rotation fixed while setting opacity as the sole factor to determine a position's occupancy. 
+                    We then design an initialization network mainly consisting of two novel components: 
+                    1) Global Information Perception (GIP) block and 2) Gaussians-Text Fusion (GTF) block. 
+                    Such a design enables each 3D Gaussian to assimilate the spatial information from other areas and semantic information from texts. 
+                    Extensive experiments show the superiority of our framework of high-quality 3D GS initialization against the existing methods, e.g., 
+                    Shap-E, by taking lexically simple, medium, and hard texts. Also, our framework can be seamlessly plugged into state-of-the-art 
+                    training frameworks, e.g., LucidDreamer for semantically consistent text-to-3D generation.
+                </p>
+            </div>
+        </div>
+        <br><br><br><br><br>
+
+
+        <div class="col-md-8 col-md-offset-2">
+            <h2 align="center">
+                <strong>Results</strong>
+            </h2>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/a rabbit is cutting grass with a lawnmower.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A rabbit is cutting grass with a lawnmower.</p>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/a humanoid banana sitting at a desk doing homework.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A humanoid banana sitting at a desk doing homework.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A squirrel knight in armor jousting on a lawn.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A squirrel knight in armor jousting on a lawn.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A clockwork engineer repairing the gears of a massive steam-powered machine.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A clockwork engineer repairing the gears of a massive steam-powered machine.</p>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/a couple cooking a complex dinner together.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A couple cooking a complex dinner together.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A knight is setting up a campfire.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A knight is setting up a campfire.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/a koala wearing a party hat and blowing out candles.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A koala wearing a party hat and blowing out candles.</p>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A robot single-handedly lifting a basketball.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A robot single-handedly lifting a basketball.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/a squirrel gesturing in front of an easel showing colorful pie charts.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A squirrel gesturing in front of an easel showing colorful pie charts.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A stylish fox typing on a vintage typewriter.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A stylish fox typing on a vintage typewriter.</p>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/A whale breaching the ocean surface and splashing back down.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A whale breaching the ocean surface and splashing back down.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/An individual sitting on a park bench, scrolling through his smartphone.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>An individual sitting on a park bench, scrolling through his smartphone.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/two bears sharing a jar of honey while sitting on a log.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Two bears sharing a jar of honey while sitting on a log.</p>
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/two llamas wearing bow ties and playing chess.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Two llamas wearing bow ties and playing chess.</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="video-item text-center">
+                    <video controls autoplay muted loop  style="width: 100%; height: auto;">
+                        <source src="./videos/Two owls playing tic-tac-toe with sticks and stones.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Two owls playing tic-tac-toe with sticks and stones.</p>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        
+
+    
+
+        <style>
+            .video-gallery {
+                margin-bottom: 20px;
+            }
+            .video-item {
+                margin-bottom: 15px;
+                max-width: 200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .video-item video {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+            }
+            .video-item p {
+                font-size: 12px;
+                color: #333;
+                margin-top: 5px;
+                min-height: 60px;
+            }
+        </style>
+
+        <!-- ##### BibTex #####-->
+        <hr>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    BibTeX
+                </h3>
+
+                <div class="row align-items-center">
+                    <div class="col py-3">
+                        <pre>             
+    <!-- @misc{jiang2024brightdreamer,
+        title={BrightDreamer: Generic 3D Gaussian Generative Framework for Fast Text-to-3D Synthesis}, 
+        author={Lutao Jiang and Lin Wang},
+        year={2024},
+        eprint={2403.11273},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+    } -->
+                        </pre>
+                    </div>
+                        
+
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+</body>
+</html>
